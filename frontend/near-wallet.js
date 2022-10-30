@@ -14,7 +14,7 @@ import { setupWalletSelector } from '@near-wallet-selector/core';
 import { setupLedger } from '@near-wallet-selector/ledger';
 import { setupMyNearWallet } from '@near-wallet-selector/my-near-wallet';
 
-const THIRTY_TGAS = '30000000000000';
+const THIRTY_TGAS = '120000000000000';
 const NO_DEPOSIT = '0';
 
 // Wallet that simplifies using the wallet selector
@@ -70,6 +70,7 @@ export class Wallet {
     const { network } = this.walletSelector.options;
     const provider = new providers.JsonRpcProvider({ url: network.nodeUrl });
 
+    console.log('### viewMethod', contractId, method)
     let res = await provider.query({
       request_type: 'call_function',
       account_id: contractId,

@@ -6,15 +6,17 @@ import './assets/global.css';
 import { EducationalText, SignInPrompt, SignOutButton } from './ui-components';
 
 
-export default function App({ isSignedIn, helloNEAR, wallet }) {
+export default function App({ isSignedIn, nravatar, wallet }) {
   const [valueFromBlockchain, setValueFromBlockchain] = React.useState();
 
   const [uiPleaseWait, setUiPleaseWait] = React.useState(true);
 
   // Get blockchian state once on component load
   React.useEffect(() => {
-    helloNEAR.getGreeting()
-      .then(setValueFromBlockchain)
+    nravatar.getAvatar()
+      .then((ret)=>{
+        console.log('ret',ret)
+      })
       .catch(alert)
       .finally(() => {
         setUiPleaseWait(false);
@@ -27,15 +29,32 @@ export default function App({ isSignedIn, helloNEAR, wallet }) {
     return <SignInPrompt greeting={valueFromBlockchain} onClick={() => wallet.signIn()}/>;
   }
 
-  function changeGreeting(e) {
-    e.preventDefault();
-    setUiPleaseWait(true);
-    const { greetingInput } = e.target.elements;
-    helloNEAR.setGreeting(greetingInput.value)
-      .then(async () => {return helloNEAR.getGreeting();})
-      .then(setValueFromBlockchain)
+  function setAvatar(e) {
+    nravatar.setAvatar({
+      contractId: 'nft.examples.testnet',
+      tokenId: 'Keypom-1667010930606'
+    })
+      .then((ret)=> {
+        console.log('ret changed',ret)
+      })
       .finally(() => {
         setUiPleaseWait(false);
+        console.log('finally')
+      });
+  }
+
+  function deleteAvatar(e) {
+    console.log(e)
+    nravatar.deleteAvatar({
+      contractId: 'nft.examples.testnet',
+      tokenId: 'Keypom-1667010930606'
+    })
+      .then((ret)=> {
+        console.log('ret changed',ret)
+      })
+      .finally(() => {
+        setUiPleaseWait(false);
+        console.log('finally')
       });
   }
 
@@ -46,20 +65,13 @@ export default function App({ isSignedIn, helloNEAR, wallet }) {
         <h1>
           The contract says: <span className="greeting">{valueFromBlockchain}</span>
         </h1>
-        <form onSubmit={changeGreeting} className="change">
-          <label>Change greeting:</label>
-          <div>
-            <input
-              autoComplete="off"
-              defaultValue={valueFromBlockchain}
-              id="greetingInput"
-            />
-            <button>
-              <span>Save</span>
-              <div className="loader"></div>
-            </button>
-          </div>
-        </form>
+        <button onClick={setAvatar}>
+          <span>Save</span>
+        </button>
+
+        <button onClick={deleteAvatar}>
+          <span>Delete</span>
+        </button>
         <EducationalText/>
       </main>
     </>

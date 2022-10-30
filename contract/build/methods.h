@@ -1,0 +1,6 @@
+DEFINE_NEAR_METHOD(create_avatar)
+DEFINE_NEAR_METHOD(delete_avatar)
+DEFINE_NEAR_METHOD(get_avatar)
+DEFINE_NEAR_METHOD(get_avatars)
+DEFINE_NEAR_METHOD(number_of_avatar)
+DEFINE_NEAR_METHOD(set_avatar)
