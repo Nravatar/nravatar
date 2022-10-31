@@ -2,8 +2,6 @@ import { NearBindgen, near, call, view, UnorderedMap, NearPromise, bytes, assert
 import { Avatar, STORAGE_COST } from './model';
 
 const NO_DEPOSIT = BigInt(0);
-const NO_GAS = BigInt(0);
-const NO_ARGS = bytes(JSON.stringify({}));
 const FIVE_TGAS = BigInt("50000000000000");
 
 @NearBindgen({})
@@ -11,11 +9,7 @@ class Nravatar {
   avatars: UnorderedMap = new UnorderedMap('avatars')
 
   @view({})
-  get_avatar({account_id = ''}:{account_id: string}): Avatar {
-    if (account_id === '') {
-      let accountId = near.predecessorAccountId(); 
-      return this.avatars.get(accountId) as Avatar;
-    }
+  get_avatar({account_id}:{account_id: string}): Avatar {
     return this.avatars.get(account_id) as Avatar;
   }
 

@@ -6,8 +6,8 @@ export class Nravatar {
     this.wallet = walletToUse;    
   }
 
-  async getAvatar() {
-    return await this.wallet.viewMethod({ contractId: this.contractId, method: 'get_avatar', args: { account_id: 'chezhe.testnet' } });
+  async getAvatar(args = {}) {
+    return await this.wallet.viewMethod({ contractId: this.contractId, method: 'get_avatar', args });
   }
 
   async getAvatars() {

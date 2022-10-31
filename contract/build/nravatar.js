@@ -1067,8 +1067,6 @@ class Avatar {
 
 var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _class, _class2;
 const NO_DEPOSIT = BigInt(0);
-BigInt(0);
-bytes(JSON.stringify({}));
 const FIVE_TGAS = BigInt("50000000000000");
 let Nravatar = (_dec = NearBindgen({}), _dec2 = view({}), _dec3 = view({}), _dec4 = view({}), _dec5 = call({
   payableFunction: true
@@ -1077,12 +1075,8 @@ let Nravatar = (_dec = NearBindgen({}), _dec2 = view({}), _dec3 = view({}), _dec
 }), _dec7 = view({}), _dec(_class = (_class2 = class Nravatar {
   avatars = new UnorderedMap('avatars');
   get_avatar({
-    account_id = ''
+    account_id
   }) {
-    if (account_id === '') {
-      let accountId = predecessorAccountId();
-      return this.avatars.get(accountId);
-    }
     return this.avatars.get(account_id);
   }
   number_of_avatar() {

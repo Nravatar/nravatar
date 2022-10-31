@@ -11,9 +11,10 @@ export default function App({ isSignedIn, nravatar, wallet }) {
 
   const [uiPleaseWait, setUiPleaseWait] = React.useState(true);
 
+  console.log('wallet.accountId',wallet.accountId)
   // Get blockchian state once on component load
   React.useEffect(() => {
-    nravatar.getAvatar()
+    nravatar.getAvatar({ account_id: wallet.accountId })
       .then((ret)=>{
         console.log('ret',ret)
       })
@@ -31,8 +32,8 @@ export default function App({ isSignedIn, nravatar, wallet }) {
 
   function setAvatar(e) {
     nravatar.setAvatar({
-      contractId: 'nft.examples.testnet',
-      tokenId: 'Keypom-1667010930606'
+      contractId: 'paras-token-v2.testnet',
+      tokenId: '2291:2'
     })
       .then((ret)=> {
         console.log('ret changed',ret)
