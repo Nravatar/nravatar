@@ -58,6 +58,14 @@ class Nravatar {
 
     let avatar = new Avatar({ contract_id, token_id });
     this.avatars.set(account_id, avatar);
+    
+    const setLog = {
+      action: "set_avatar",
+      account_id,
+      contract_id,
+      token_id,
+    }
+    near.log(`EVENT_JSON:${JSON.stringify(setLog)}`);
 
     return avatar;
   }
@@ -65,7 +73,12 @@ class Nravatar {
   @view({})
   delete_avatar() {
     let accountId = near.predecessorAccountId(); 
-    this.avatars.set(accountId, null);
+    this.avatars.remove(accountId);
+    const deleteLog = {
+      action: "delete_avatar",
+      account_id: accountId,
+    }
+    near.log(`EVENT_JSON:${JSON.stringify(deleteLog)}`);
   }
 }
 

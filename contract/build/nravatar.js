@@ -382,6 +382,12 @@ var CurveType;
 
 const U64_MAX = 2n ** 64n - 1n;
 const EVICTED_REGISTER = U64_MAX - 1n;
+function log(...params) {
+  env.log(`${params.map(x => x === undefined ? 'undefined' : x) // Stringify undefined
+  .map(x => typeof x === 'object' ? JSON.stringify(x) : x) // Convert Objects to strings
+  .join(' ')}` // Convert to string
+  );
+}
 function predecessorAccountId() {
   env.predecessor_account_id(0);
   return env.read_register(0);
@@ -1132,11 +1138,23 @@ let Nravatar = (_dec = NearBindgen({}), _dec2 = view({}), _dec3 = view({}), _dec
       token_id
     });
     this.avatars.set(account_id, avatar);
+    const setLog = {
+      action: "set_avatar",
+      account_id,
+      contract_id,
+      token_id
+    };
+    log(`EVENT_JSON:${JSON.stringify(setLog)}`);
     return avatar;
   }
   delete_avatar() {
     let accountId = predecessorAccountId();
-    this.avatars.set(accountId, null);
+    this.avatars.remove(accountId);
+    const deleteLog = {
+      action: "delete_avatar",
+      account_id: accountId
+    };
+    log(`EVENT_JSON:${JSON.stringify(deleteLog)}`);
   }
 }, (_applyDecoratedDescriptor(_class2.prototype, "get_avatar", [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, "get_avatar"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "number_of_avatar", [_dec3], Object.getOwnPropertyDescriptor(_class2.prototype, "number_of_avatar"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "get_avatars", [_dec4], Object.getOwnPropertyDescriptor(_class2.prototype, "get_avatars"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "set_avatar", [_dec5], Object.getOwnPropertyDescriptor(_class2.prototype, "set_avatar"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "create_avatar", [_dec6], Object.getOwnPropertyDescriptor(_class2.prototype, "create_avatar"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "delete_avatar", [_dec7], Object.getOwnPropertyDescriptor(_class2.prototype, "delete_avatar"), _class2.prototype)), _class2)) || _class);
 function delete_avatar() {
